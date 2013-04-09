@@ -186,17 +186,6 @@ namespace RequestDownload
         //
         private void SendMessage(string message)
         {
-            /* TcpClient tcpClient = (TcpClient) this.client;
-             NetworkStream clientStream = tcpClient.GetStream();
-             ASCIIEncoding encoder = new ASCIIEncoding();
-
-             clientStream = tcpClient.GetStream();
-             encoder = new ASCIIEncoding();
-             byte[] buffer = encoder.GetBytes(message + "\r\n");
-             Console.WriteLine("- Sent:     -- " + message);
-             clientStream.Write(buffer, 0, buffer.Length);
-             clientStream.Flush();*/
-
             TcpClient tcpclnt = new TcpClient();
             tcpclnt.Connect("10.102.98.34", 8200);
             Stream stm = tcpclnt.GetStream();
