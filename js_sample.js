@@ -1,3 +1,5 @@
+// Extracted from a large file
+
 $(document).ready(function(){
    $("#price-search li").click(function(){
       $(this).toggleClass("active");
