@@ -1,0 +1,56 @@
+@font-face {
+    font-family: 'nonfa';
+    src:url('../../fonts/nonfa.eot?owpgbg');
+    src:url('../../fonts/nonfa.eot?#iefixowpgbg') format('embedded-opentype'),
+    url('../../fonts/nonfa.woff?owpgbg') format('woff'),
+    url('../../fonts/nonfa.ttf?owpgbg') format('truetype'),
+    url('../../fonts/nonfa.svg?owpgbg#nonfa') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'nonfa';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ico_n_1:before {
+    content: "\e600";
+}
+
+.icon-ico_n_2:before {
+    content: "\e601";
+}
+
+.icon-ico_n_3:before {
+    content: "\e602";
+}
+
+.icon-ico_n_4:before {
+    content: "\e603";
+}
+
+.icon-ico_n_5:before {
+    content: "\e604";
+}
+
+.icon-arrow:before {
+    content: "\e605";
+}
+
+.icon-bottombannerpoint:before {
+    content: "\e606";
+}
+
+.icon-burger:before {
+    content: "\e607";
+}
