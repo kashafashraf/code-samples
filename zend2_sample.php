@@ -45,7 +45,7 @@ class Module
     public $resUri;
     public $uploadUri;
     public $isLocalDev = false; // Server is a local dev server
-    public $isDevIp = false; // IP is Netefficiency's
+    public $isDevIp = false; // IP is Local
     public $isDebugOutputSafe = false; // Is it safe to output debug information
     public $isDebugInvisibleSafe = false; // Is it safe to invisibly output debug information
     public $viewModelIsJson;
