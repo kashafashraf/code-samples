@@ -1,86 +1,85 @@
-// Extracted from a large file
+/**
+ * Created by Mirza on 24/05/2015.
+ */
 
-$(document).ready(function(){
-   $("#price-search li").click(function(){
-      $(this).toggleClass("active");
-      showResults("","");
-   });
-  
-   $("#recipient-search li").click(function(){
-      $(this).toggleClass("active");
-      showResults("","");
-   });
-  
-   $("#category-search li").click(function(){
-      //alert('i m in toggle'); 
-      $(this).toggleClass("active");
-      showResults("","");
-   });
+$(function () {
+    var App = window;
+    var Order = App.Order = {
+        sections: {
+            category: {
+                accordionGroupCategory: $('#accordion-group-category'),
+                accordionHeadingCategory: $('#accordion-heading-category'),
+                selectedCategory: $('#selected-category'),
+                categoryItem: $('.cat_list_item'),
+                catImage: $('.cat_img'),
+                selectedVal: null,
+                onCategoryClick: function () {
+                    Order.sections.products.hideFlashMessage();
+                    var section = Order.sections.category;
+                    section.categoryItem = $(this);
+                    section.selectedCategory.text(section.categoryItem.find('label').text());
+                    section.catImage.removeClass('image-selected');
+                    section.categoryItem.find('.cat_img').addClass('image-selected');
+                    Order.sections.subcategory.accordionGroupSubCategory.addClass('display-none');
+                    Order.sections.products.accordionGroupProducts.addClass('display-none');
+                    // populate sub-categories
+                    section.selectedVal = section.categoryItem.attr('data-val');
+                    Order.sections.request.getSubCategories(section.categoryItem.attr('data-val'));
+                    scrollToElement(Order.sections.category.accordionHeadingCategory, 0);
+                    return false;
+                },
+                onHeaderClick: function() {
+                    $('#collapseCategory').collapse('show');
+                    $('#collapseSubCategory').collapse('hide');
+                    //scrollToElement(Order.sections.subcategory.accordionHeadingSubCategory, 0);
+                },
+                init: function () {
+                    this.categoryItem.click(this.onCategoryClick);
+                    this.accordionHeadingCategory.click(this.onHeaderClick);
+                }
+            },
+            subcategory:{
+                accordionGroupSubCategory: $('#accordion-group-subcategory'),
+                accordionHeadingSubCategory: $('#accordion-heading-sub-category'),
+                selectedSubCategory: $('#selected-sub-category'),
+                subCategoryItemContainer: $('#collapseSubCategory'),
+                subCategoryItem: $('.sub_cat_list_item'),
+                subCatImage: $('.sub_cat_img'),
+                selectedVal: null,
+                onSubCategoryClick: function () {
+                    Order.sections.products.hideFlashMessage();
+                    var section = Order.sections.subcategory;
+                    section.subCategoryItem = $(this);
+                    section.selectedSubCategory.text(section.subCategoryItem.find('label').text());
+                    section.subCategoryItemContainer.find('.sub_cat_img').removeClass('image-selected');
+                    section.subCategoryItem.find('.sub_cat_img').addClass('image-selected');
+                    // populate sub-categories
+                    Order.sections.request.getProducts(Order.sections.category.selectedVal, section.subCategoryItem.attr('data-val'));
+                    scrollToElement(Order.sections.subcategory.accordionHeadingSubCategory, 0);
+                    return false;
 
+                },
+                onHeaderClick: function() {
+                    //$('#collapseCategory').collapse('show');
+                    //$('#collapseSubCategory').collapse('hide');
+                    //scrollToElement(Order.sections.subcategory.accordionHeadingSubCategory, 0);
+                },
+                init: function () {
+                    var section = this;
+                    section.subCategoryItemContainer.on('click', '.sub_cat_list_item', section.onSubCategoryClick);
+                        //.click(this.onSubCategoryClick);
+                    //this.accordionHeadingCategory.click(this.onHeaderClick);
+                }
 
- });
-
-Array.prototype.in_array = function(p_val) {
-	for(var i = 0, l = this.length; i < l; i++) {
-		if(this[i] == p_val) {
-			return true;
-		}
-	}
-	return false;
-}
- 
-function showResults(sort_by, items_per_page,page_no)
-{
-    var price_type = [];
-    var recipient_type= [];
-    var category_type= [];
-
-    var price="";
-    var recipient="";
-    var category="";
-
-
-    //Get selected price-ranges and create a string for query string
-    var price_count=0;
-    $("#price-search .active").each(function(){
-      price_type[price_count] = $(this).text(); 
-      price_count++;
-    });
-    price = implode('~', price_type);
-    price =escape(price);
-    price = price.replace(/%A3/g, "|");
-    
-    //Get selected recipient and create a string for query string
-    var recipient_count=0;
-    $("#recipient-search .active").each(function(){
-      recipient_type[recipient_count] = $(this).text(); 
-      recipient_count++;
-    });
-    recipient = implode('~', recipient_type);
-    recipient =escape(recipient);
-    recipient = recipient.replace(/%A3/g, "|");
-    
-    //Get selected categories and create a string for query string
-    var main_category=""
-    var category_count=0;
-    
-        var cat_array = ["all watches","all gold","all silver jewellery","all diamonds","all shamballa ","all childrens","all trollbeads "];
-    $("#category-search .active").each(function(){
-       
-      if(cat_array.in_array($(this).text()))
-        category_type[category_count] = main_category;
-      else
-        category_type[category_count] = $(this).text();          
-        
-      category_count++;
-    });
-    category = implode('~', category_type);
-    category =escape(category);
-    category = category.replace(/%A3/g, "|");
-
-    if(category=="")
-      category = '';
-
-    $("#col-centre").load(url + "showsearchresults.inc.php?price="+escape(price)+"&recipient="+escape(recipient)+"&category="+escape(category)+"&sort_by="+sort_by+"&records_per_page="+items_per_page+"&page="+page_no); 
-
-}
+            },
+            
+        init: function () {
+            $.each(this.sections, function (k, v) {
+                if (v && 'object' == typeof v && 'function' == typeof v.init) {
+                    v.init();
+                }
+            });
+        }
+    };
+    Order.init();
+});
